@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+.showBlue{
+  color: cadetblue;
+}
+.example{
+  animation-name: example;
+}
+@keyframes example {
+  0%   {color: cadetblue;}
+  25%  {color: cornflowerblue;}
+  50%  {color: royalblue;}
+  100% {color: blueviolet;}
+}
