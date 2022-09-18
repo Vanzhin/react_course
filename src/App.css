@@ -40,6 +40,19 @@
 .showBlue{
   color: cadetblue;
 }
+.inputForm{
+  background-color: cornflowerblue;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 30%;
+  padding: 10px;
+  border-radius: 3px;
+  margin: 10px;
+}
+.textArea{
+  resize: none;
+}
 .example{
   animation-name: example;
 }
