@@ -1,49 +1,100 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './App.css';
 import Message from "./Message";
-import List from "./List";
+import MessageList from "./List";
+import ChatList from "./ChatList"
+import {Box, Grid, Button, TextField, Icon} from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
+import {ThemeProvider, useTheme, createTheme} from "@mui/material";
 
 function App() {
+    const theme = createTheme({
+        palette: {
+            primary: {
+                main: "#5e00ff",
+                addition:"#7b00ff",
+                background:"#c1a6ea",
+            }, secondary: {
+                main: "#0098FF",
+                background:"#80e1ff"
+            },
+            button: {
+                color: "#6b6b6b",
+                background:"#acfca7",
+            }
+        },
+    });
 
     const name = 'Nikolay';
-    const array = ["Яблоко", "Апельсин", "Слива"];
     const [messageList, setMessageList] = useState([]);
+    const [chatList, setChatList] = useState([]);
     const [author, setAuthor] = useState('');
     const [message, setMessage] = useState('');
-    const ListUpdate = () => {
-
-        setMessageList([...messageList, {user: author, text: message}]);
+    const ListUpdate = (e) => {
+        e.preventDefault();
+        setMessageList([...messageList, {user: author, text: message, id: messageList.length + 1}]);
+        setChatList([...chatList, {user: author, id: messageList.length + 1, createdAt: new Date()}])
         setAuthor('');
         setMessage('');
     }
     const messageAlert = (count, message) => {
         if (count > 0)
             alert(message + count)
-
-    }
+    };
+    const inputRef = useRef(null);
 
     useEffect(() => {
+        inputRef.current?.focus();
+    }, [messageList]);
+    useEffect(() => {
         setTimeout(messageAlert, 1500, messageList.length, 'message has been sent! total messages: ')
-    }, [messageList])
+    }, [messageList]);
 
     return (
-        <div className="App">
-            <header className="App-header">
-                <Message name={name}/>
-                <List array={messageList}/>
-                <div className={"inputForm"}>
-                    <h4>feedback</h4>
-                    <label htmlFor="author">Your name</label>
-                    <input onInput={(event) => setAuthor(event.target.value)} id="author" type="text" value={author}/>
-                    <label htmlFor="text">message</label>
-                    <textarea className={"textArea"} id={"text"} rows={5} value={message}
-                              onInput={(event) => setMessage(event.target.value)}/>
-                    <button onClick={ListUpdate}>Отправиеть
-                    </button>
-                </div>
-            </header>
+        <ThemeProvider theme={theme}>
+            <div className="App">
+                <header className="App-header">
+                    <Message name={name}/>
 
-        </div>
+                    <Grid container spacing={2}
+                          direction="row"
+                          justifyContent="center"
+                          alignItems="self-start"
+                          gap={1}>
+                        <ChatList chatList={chatList}/>
+                        <Box component="form" sx={{background: theme.palette.primary.background, borderRadius: 2, p: 3}} onSubmit={ListUpdate}>
+                            <p className={"showBlue"}>feedback</p>
+                            <Grid container spacing={2}
+                                  direction="column"
+                                  justifyContent="center"
+                                  alignItems="stretch">
+                                <Grid item xs={12}>
+                                    <TextField inputRef={inputRef} id="outlined-basic" label="Your name"
+                                               variant="outlined"
+                                               onInput={(event) => setAuthor(event.target.value)}
+                                               value={author}></TextField>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField value={message}
+                                               onInput={(event) => setMessage(event.target.value)}
+                                               id="outlined-multiline"
+                                               label="Message"
+                                               multiline
+                                               rows={4}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Button variant="contained" sx={{color:theme.palette.button.color, background:theme.palette.button.background}} type={"submit"}
+                                            endIcon={<SendIcon/>}>send</Button>
+                                </Grid>
+                            </Grid>
+                        </Box>
+                        <MessageList array={messageList}/>
+                    </Grid>
+
+                </header>
+            </div>
+        </ThemeProvider>
     );
 }
 
