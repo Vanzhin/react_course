@@ -8,16 +8,15 @@ import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 
 
-function MessageList({array}) {
+function MessageList({messages}) {
     const theme = useTheme();
-
-    if (array.length > 0) {
+    if (messages.length > 0) {
         return (
             <List sx={{width: '100%', maxWidth: 360, bgcolor: theme.palette.secondary.background, borderRadius: 2}}>
-                {array.map(item => (
+                {messages.map(item => (
                     <ListItem alignItems="flex-start" key={item.id}>
                         <ListItemAvatar>
-                            <Avatar alt={item.user.toUpperCase()} src="/static/images/avatar/1.jpg"/>
+                            <Avatar alt={item.author.toUpperCase()} src="/static/images/avatar/1.jpg"/>
                         </ListItemAvatar>
                         <ListItemText
                             primary={
@@ -28,7 +27,7 @@ function MessageList({array}) {
                                         variant="body1"
                                         color="text.primary"
                                     >
-                                        {item.user} wrote
+                                        {item.author} wrote
                                     </Typography>
 
                                     <Typography
