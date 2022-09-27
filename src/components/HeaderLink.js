@@ -6,7 +6,6 @@ import {useTheme} from "@mui/material/styles";
 function HeaderLink({to, children}) {
     const match = useMatch(to);
     const theme = useTheme();
-    console.log(match, to)
     return (
         <NavLink to={to}
                  style={{color: match ? theme.palette.link.active : theme.palette.link.passive}}>{children}</NavLink>

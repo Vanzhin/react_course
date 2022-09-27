@@ -14,7 +14,9 @@ function CurrentChat() {
     const [message, setMessage] = useState('');
     const messagesUpdate = (e) => {
         e.preventDefault();
-        chats[chatId].messages.push({text: message, author: 'test', id: chats[chatId].messages.length + 1 })
+        const updated = chats;
+        updated[chatId].messages.push({text: message, author: 'test', id: updated[chatId].messages.length + 1 });
+        setChats(updated);
         setMessage('');
     }
     if (!chats[chatId] || !chatId){
