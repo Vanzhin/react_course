@@ -1,11 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import {Grid} from "@mui/material";
+import {Button, FormControl, FormHelperText, Grid, InputLabel, MenuItem, Select} from "@mui/material";
 import HeaderLink from "./HeaderLink";
+import {ThemeContext, themes} from "../context/themes";
+import LightModeIcon from '@mui/icons-material/LightMode';
 
 const navItems = [
     {
@@ -28,6 +30,7 @@ const navItems = [
 
 
 function Header(props) {
+    const {contextTheme, toggleTheme, changeTheme} = useContext(ThemeContext);
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar position="static">
@@ -41,6 +44,22 @@ function Header(props) {
                                     <HeaderLink to={item.to} key={item.name}>{item.name}</HeaderLink>
                                 )
                             )}
+                            <FormControl sx={{background: contextTheme.background, color: contextTheme.color}}
+                                         size="small">
+                                <Select
+                                    defaultValue={'light'}
+                                    // value={age}
+                                    onChange={changeTheme}
+                                >
+                                    {Object.keys(themes).map((item) => (
+                                            <MenuItem key={themes[item].name}
+                                                      value={themes[item].name}>{themes[item].name}</MenuItem>
+                                        )
+                                    )}
+                                </Select>
+                                <FormHelperText>theme change</FormHelperText>
+
+                            </FormControl>
                         </Grid>
 
                     </Typography>

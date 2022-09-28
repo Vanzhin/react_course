@@ -9,24 +9,29 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 function ChatsPage(props) {
     const theme = useTheme();
     const initialChats = {
-        id1: {
+        1: {
             name: "Chat1",
             messages: [{text: "FirstMessage", author: 'test', id: 1,}],
         },
-        id2: {
+        2: {
             name: "Chat2",
             messages: [{text: "FirstMessageHereToo!", author: 'test', id: 1,}],
         },
     };
+    const initialMessages = [
+        {text: "FirstMessage", author: 'test', id: 1, chatId: 1},
+        {text: "FirstMessageHereToo!", author: 'test', id: 2, chatId: 2}
+    ]
 
     const [chats, setChats] = useState(initialChats);
+    console.log(chats);
     const ChatsCreate = () => {
         let id = 1;
         if (Object.keys(chats).length) {
-            id = Number(Object.keys(chats)[Object.keys(chats).length - 1].replace('id', '')) + 1;
+            id = Number(Object.keys(chats)[Object.keys(chats).length - 1]) + 1;
         }
         const updated = chats;
-        updated['id' + id] = {
+        updated[id] = {
             name: "Chat" + id,
             messages: [],
         }
