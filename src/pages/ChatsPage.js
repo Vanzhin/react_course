@@ -11,11 +11,9 @@ function ChatsPage(props) {
     const initialChats = {
         1: {
             name: "Chat1",
-            messages: [{text: "FirstMessage", author: 'test', id: 1,}],
         },
         2: {
             name: "Chat2",
-            messages: [{text: "FirstMessageHereToo!", author: 'test', id: 1,}],
         },
     };
     const initialMessages = [
@@ -24,7 +22,7 @@ function ChatsPage(props) {
     ]
 
     const [chats, setChats] = useState(initialChats);
-    console.log(chats);
+    const [messages, setMessages] = useState(initialMessages);
     const ChatsCreate = () => {
         let id = 1;
         if (Object.keys(chats).length) {
@@ -55,7 +53,7 @@ function ChatsPage(props) {
                 )}
             </Grid>
             <Button variant="outlined" endIcon={<AddCircleOutlineIcon/>} onClick={ChatsCreate}>create new chat</Button>
-            <Outlet context={[chats, setChats]}/>
+            <Outlet context={[chats, messages, setMessages]}/>
         </div>
     );
 }

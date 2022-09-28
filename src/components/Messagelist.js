@@ -5,11 +5,14 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-import { useTheme } from '@mui/material/styles';
+import {useTheme} from '@mui/material/styles';
+import {NavLink, useParams} from "react-router-dom";
 
 
 function MessageList({messages}) {
     const theme = useTheme();
+    const {chatId} = useParams();
+    console.log(messages);
     if (messages.length > 0) {
         return (
             <List sx={{width: '100%', maxWidth: 360, bgcolor: theme.palette.secondary.background, borderRadius: 2}}>
@@ -27,7 +30,9 @@ function MessageList({messages}) {
                                         variant="body1"
                                         color="text.primary"
                                     >
-                                        {item.author} wrote
+                                        <NavLink
+                                            to={`/chats/${chatId}/${item.author.toLowerCase()}`}>{item.author}</NavLink>
+                                        <span> wrote</span>
                                     </Typography>
 
                                     <Typography
@@ -38,16 +43,17 @@ function MessageList({messages}) {
                                     >
                                         {item.text}
                                     </Typography>
-
                                 </React.Fragment>
                             }
-
                         />
                     </ListItem>
-                    ))}
+                ))}
             </List>
-
         );
+    } else {
+        return <Typography variant="h6" sx={{textAlign: 'start'}}>
+            no message yet
+        </Typography>
     }
 
 }

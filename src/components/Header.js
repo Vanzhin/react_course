@@ -4,10 +4,9 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import {Button, FormControl, FormHelperText, Grid, InputLabel, MenuItem, Select} from "@mui/material";
+import {FormControl, FormHelperText, Grid, InputLabel, MenuItem, Select} from "@mui/material";
 import HeaderLink from "./HeaderLink";
 import {ThemeContext, themes} from "../context/themes";
-import LightModeIcon from '@mui/icons-material/LightMode';
 
 const navItems = [
     {

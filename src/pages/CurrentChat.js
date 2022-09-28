@@ -1,26 +1,42 @@
 import React, {useState} from 'react';
 import {useOutletContext, useParams} from "react-router-dom";
 import MessageList from "../components/Messagelist";
-import {Box, Button, Grid, TextField} from "@mui/material";
+import {Alert, Box, Button, Grid, TextField, Typography} from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import {useTheme} from "@mui/material/styles";
 import NoChat from "../components/NoChat";
 
 
 function CurrentChat() {
-    const {chatId} = useParams();
-    const [chats, setChats] = useOutletContext();
+    const {chatId, userName} = useParams();
+    const [chats, messages, setMessages] = useOutletContext();
+
     const theme = useTheme();
     const [message, setMessage] = useState('');
+    const [author, setAuthor] = useState('Nikolay');
+
+    const chatMessages = (array) => {
+        return array.filter(item => item.chatId === Number(chatId))
+    };
+    const headerUserName = () => {
+        if(userName){
+            return <Typography variant="h6" sx={{textAlign: 'start'}}>
+                {userName}'s chat's messages
+            </Typography>
+        }
+
+    };
+
+    const userMessages = (array) => {
+        return array.filter(item => item.author.toLowerCase() === userName && item.chatId === Number(chatId))
+    };
     const messagesUpdate = (e) => {
         e.preventDefault();
-        const updated = chats;
-        updated[chatId].messages.push({text: message, author: 'test', id: updated[chatId].messages.length + 1 });
-        setChats(updated);
+        setMessages([...messages, {text: message, author: author, id: Date.now(), chatId: Number(chatId)}]);
         setMessage('');
     }
-    if (!chats[chatId] || !chatId){
-        return <NoChat />
+    if (!chats[chatId] || !chatId) {
+        return <NoChat/>
     }
 
     return (
@@ -39,7 +55,14 @@ function CurrentChat() {
                           alignItems="center">
                         <Grid item xs={12}>
                             <TextField
-                                id="outlined-multiline"
+                                label="From"
+                                value={author}
+                                autoFocus
+                                onInput={(event) => setAuthor(event.target.value)}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
                                 label="Message"
                                 value={message}
                                 autoFocus
@@ -55,8 +78,16 @@ function CurrentChat() {
                         </Grid>
                     </Grid>
                 </Box>
+                <div style={{margin:10}}>
+                    {headerUserName()}
+                    <MessageList messages={userMessages(messages)}/>
+                </div>
+
             </Grid>
-            <MessageList messages={chats[chatId].messages}/>
+            <Typography variant="h3" component="h4" sx={{textAlign: 'start'}}>
+                all chat's messages
+            </Typography>
+            <MessageList messages={chatMessages(messages)}/>
         </div>
     );
 }
