@@ -1,9 +1,8 @@
 import React from 'react';
 import '../App.css';
-import {ThemeProvider, useTheme, createTheme} from "@mui/material";
+import {ThemeProvider, createTheme} from "@mui/material";
 import {Route, Routes} from "react-router-dom";
 import HomePage from "../pages/HomePage";
-import ChatListPage from "../pages/ChatListPage";
 import ProfilePage from "../pages/ProfilePage";
 import Layout from "./Layout";
 import NotFoundPage from "../pages/NotFoundPage";
@@ -40,9 +39,10 @@ function App() {
                     <Route index element={<HomePage/>}/>
                     <Route path={'profile'} element={<ProfilePage name={name}/>}/>
                     {/*<Route path={'chat-test'} element={<ChatListPage/>}/>*/}
-                    <Route path={'/chats'} element={<ChatsPage/>}>
+                    <Route path={'chats'} element={<ChatsPage/>}>
                         <Route index element={<NoChat/>}/>
-                        <Route path={':chatId'} element={<CurrentChat/>}/>
+                        <Route path={':chatId/'} element={<CurrentChat/>}/>
+                        <Route path={':chatId/:userName'} element={<CurrentChat/>}/>
                         <Route path={'nochat'} element={<NoChat/>}/>
                     </Route>
                 </Route>
