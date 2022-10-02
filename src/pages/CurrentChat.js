@@ -1,41 +1,40 @@
 import React, {useState} from 'react';
-import {useOutletContext, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import MessageList from "../components/Messagelist";
-import {Alert, Box, Button, Grid, TextField, Typography} from "@mui/material";
+import {Box, Button, Grid, TextField, Typography} from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import {useTheme} from "@mui/material/styles";
 import NoChat from "../components/NoChat";
+import {shallowEqual, useDispatch, useSelector} from "react-redux";
+import {getChat} from "../store/chats/selectors";
+import {getMessagesByChat} from "../store/messages/selectors";
 
 
 function CurrentChat() {
     const {chatId, userName} = useParams();
-    const [chats, messages, setMessages] = useOutletContext();
-
+    const dispatch = useDispatch();
+    const chat = useSelector(getChat(chatId), shallowEqual);
+    const messages = useSelector(getMessagesByChat(chatId), shallowEqual);
     const theme = useTheme();
     const [message, setMessage] = useState('');
     const [author, setAuthor] = useState('Nikolay');
-
-    const chatMessages = (array) => {
-        return array.filter(item => item.chatId === Number(chatId))
-    };
     const headerUserName = () => {
-        if(userName){
+        if (userName) {
             return <Typography variant="h6" sx={{textAlign: 'start'}}>
                 {userName}'s chat's messages
             </Typography>
         }
 
     };
-
     const userMessages = (array) => {
-        return array.filter(item => item.author.toLowerCase() === userName && item.chatId === Number(chatId))
+        return array.filter(item => item.author.toLowerCase() === userName)
     };
     const messagesUpdate = (e) => {
         e.preventDefault();
-        setMessages([...messages, {text: message, author: author, id: Date.now(), chatId: Number(chatId)}]);
+        dispatch({type: 'messageCreate', message: message, author: author, chatId: Number(chatId) })
         setMessage('');
     }
-    if (!chats[chatId] || !chatId) {
+    if (!chat.length || !chatId) {
         return <NoChat/>
     }
 
@@ -78,7 +77,7 @@ function CurrentChat() {
                         </Grid>
                     </Grid>
                 </Box>
-                <div style={{margin:10}}>
+                <div style={{margin: 10}}>
                     {headerUserName()}
                     <MessageList messages={userMessages(messages)}/>
                 </div>
@@ -87,7 +86,7 @@ function CurrentChat() {
             <Typography variant="h3" component="h4" sx={{textAlign: 'start'}}>
                 all chat's messages
             </Typography>
-            <MessageList messages={chatMessages(messages)}/>
+            <MessageList messages={messages}/>
         </div>
     );
 }

@@ -2,58 +2,32 @@ import React, {useEffect, useState} from 'react';
 import {useTheme} from "@mui/material/styles";
 import {Button, Grid} from "@mui/material";
 import HeaderLink from "../components/HeaderLink";
-import {Navigate, Outlet, Route, useParams} from "react-router-dom";
+import {Outlet} from "react-router-dom";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import {useDispatch, useSelector} from "react-redux";
 
 function ChatsPage(props) {
     const theme = useTheme();
-    const initialChats = {
-        1: {
-            name: "Chat1",
-        },
-        2: {
-            name: "Chat2",
-        },
-    };
-    const initialMessages = [
-        {text: "FirstMessage", author: 'test', id: 1, chatId: 1},
-        {text: "FirstMessageHereToo!", author: 'test', id: 2, chatId: 2}
-    ]
-
-    const [chats, setChats] = useState(initialChats);
-    const [messages, setMessages] = useState(initialMessages);
-    const ChatsCreate = () => {
-        let id = 1;
-        if (Object.keys(chats).length) {
-            id = Number(Object.keys(chats)[Object.keys(chats).length - 1]) + 1;
-        }
-        const updated = chats;
-        updated[id] = {
-            name: "Chat" + id,
-            messages: [],
-        }
-        setChats({...updated});
-    }
-    const ChatsDelete = (id) => {
-        const updated = chats;
-        delete updated[id]
-        setChats({...updated});
+    const chats = useSelector(state => state.chats.chats);
+    const dispatch = useDispatch();
+    const handleDelete = (id) => {
+        dispatch({type: 'chatDelete', payload: id})
     }
 
     return (
         <div className="App" style={{margin: 20}}>
             <Grid container gap={5} sx={{background: theme.palette.secondary.background, p: 2}}>
-                {Object.keys(chats).map((id, i) => (
-                        <HeaderLink to={'/chats/' + id} key={i}>Chat id: {id}
+                {chats.map((chat) => (
+                        <HeaderLink to={'/chats/' + chat.id} key={chat.id}>Chat name: {chat.name}
                             <HighlightOffIcon sx={{color: theme.palette.button.danger}}
-                                              onClick={() => ChatsDelete(id)}/>
+                                              onClick={() => (handleDelete(chat.id))}/>
                         </HeaderLink>
                     )
                 )}
             </Grid>
-            <Button variant="outlined" endIcon={<AddCircleOutlineIcon/>} onClick={ChatsCreate}>create new chat</Button>
-            <Outlet context={[chats, messages, setMessages]}/>
+            <Button variant="outlined" endIcon={<AddCircleOutlineIcon/>} onClick={()=>dispatch({type: 'chatCreate'})}>create new chat</Button>
+            <Outlet />
         </div>
     );
 }
