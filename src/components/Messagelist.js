@@ -7,12 +7,13 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import {useTheme} from '@mui/material/styles';
 import {NavLink, useParams} from "react-router-dom";
-
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import {useDispatch} from "react-redux";
 
 function MessageList({messages}) {
     const theme = useTheme();
+    const dispatch = useDispatch();
     const {chatId} = useParams();
-    console.log(messages);
     if (messages.length > 0) {
         return (
             <List sx={{width: '100%', maxWidth: 360, bgcolor: theme.palette.secondary.background, borderRadius: 2}}>
@@ -23,27 +24,32 @@ function MessageList({messages}) {
                         </ListItemAvatar>
                         <ListItemText
                             primary={
-                                <React.Fragment>
-                                    <Typography
-                                        sx={{display: 'inline', color: 'black'}}
-                                        component="span"
-                                        variant="body1"
-                                        color="text.primary"
-                                    >
-                                        <NavLink
-                                            to={`/chats/${chatId}/${item.author.toLowerCase()}`}>{item.author}</NavLink>
-                                        <span> wrote</span>
-                                    </Typography>
+                                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                                    <div style={{display: 'flex', flexDirection: 'column'}}>
+                                        <Typography
+                                            sx={{display: 'inline', color: 'black'}}
+                                            component="span"
+                                            variant="body1"
+                                            color="text.primary"
+                                        >
+                                            <NavLink
+                                                to={`/chats/${chatId}/${item.author.toLowerCase()}`}>{item.author}</NavLink>
+                                            <span> wrote</span>
+                                        </Typography>
 
-                                    <Typography
-                                        sx={{display: 'block', color: 'black'}}
-                                        component="div"
-                                        variant="body1"
-                                        color="text.primary"
-                                    >
-                                        {item.text}
-                                    </Typography>
-                                </React.Fragment>
+                                        <Typography
+                                            sx={{display: 'block', color: 'black'}}
+                                            component="div"
+                                            variant="body1"
+                                            color="text.primary"
+                                        >
+                                            {item.text}
+                                        </Typography>
+                                    </div>
+
+                                    <HighlightOffIcon sx={{color: theme.palette.button.danger}}
+                                                      onClick={() => (dispatch({type: 'messageDelete', id: item.id}))}/>
+                                </div>
                             }
                         />
                     </ListItem>
