@@ -8,6 +8,8 @@ import NoChat from "../components/NoChat";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {getChat} from "../store/chats/selectors";
 import {getMessagesByChat} from "../store/messages/selectors";
+import {addMessageWithThunk} from "../redux/middlewares/messageMiddleWare";
+import {addMessage} from "../redux/reducers/messageReducer";
 
 
 function CurrentChat() {
@@ -31,11 +33,24 @@ function CurrentChat() {
     };
     const messagesUpdate = (e) => {
         e.preventDefault();
-        dispatch({type: 'messageCreate', message: message, author: author, chatId: Number(chatId) })
+
+        dispatch(addMessageWithThunk(message, author, Number(chatId)))
         setMessage('');
     }
     if (!chat.length || !chatId) {
         return <NoChat/>
+    }
+    const addMessageWithThunk = (message, author, chatId) => (dispatch, getState) => {
+        dispatch(addMessage({message: message, author: author, chatId: Number(chatId)}));
+        if (author !== 'chatbot') {
+            setTimeout(() => dispatch(addMessage({
+                message: "hello, " + author,
+                author: 'chatbot',
+                chatId: Number(chatId)
+            })), 1000);
+
+        }
+
     }
 
     return (

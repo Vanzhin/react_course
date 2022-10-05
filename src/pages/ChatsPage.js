@@ -14,7 +14,10 @@ function ChatsPage(props) {
     const handleDelete = (id) => {
         dispatch({type: 'chatDelete', payload: id})
     }
-
+    const thunk = (store) => (next) => (action) => {
+        console.log(store, action)
+        return next(action);
+    };
     return (
         <div className="App" style={{margin: 20}}>
             <Grid container gap={5} sx={{background: theme.palette.secondary.background, p: 2}}>

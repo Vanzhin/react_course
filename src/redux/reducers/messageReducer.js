@@ -4,27 +4,32 @@ const initialState = {
         {text: "FirstMessageHereToo!", author: 'test', id: 2, chatId: 2}
     ]
 }
+const CREATE = 'MESSAGE_CREATE';
+const DELETE = 'MESSAGE_DELETE'
 
 export const messageReducer = (state = initialState, action) => {
     switch (action.type) {
 
-        case 'messageDelete':
+        case DELETE:
             return {
                 ...state,
-                messages: state.messages.filter((item) => item.id !== action.id)
+                messages: state.messages.filter((item) => item.id !== action.payload)
             }
-        case 'messageCreate':
+        case CREATE:
             return {
                 ...state,
                 messages: [...state.messages, {
-                    text: action.message,
-                    author: action.author,
+                    text: action.payload.message,
+                    author: action.payload.author,
                     id: Date.now(),
-                    chatId: action.chatId
+                    chatId: action.payload.chatId
                 }]
             };
 
         default:
             return state
     }
-}
+};
+
+export const addMessage = (payload) => ({type: CREATE, payload});
+export const deleteMassage = (payload) =>({type: DELETE, payload})
