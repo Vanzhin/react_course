@@ -20,10 +20,7 @@ export const chatReducer = (state = initialState, action) => {
                 chats: state.chats.filter(chat => chat.id !== action.payload)
             };
         case 'chatCreate':
-            let id = 1;
-            if (state.chats.length) {
-                id = Number(state.chats[state.chats.length - 1].id + 1);
-            }
+            let id = Date.now();
             return {
                 ...state,
                 chats: [...state.chats, {id: id, name: "Chat" + id}]

@@ -1,5 +1,14 @@
-export const addMessageWithThunk = (chatId, message, author) => (dispatch, getState) => {
-    dispatch({type: 'messageCreate', message: message, author: author, chatId: Number(chatId) });
+import {addMessage} from "../reducers/messageReducer";
 
-    setTimeout(() => dispatch({type: 'messageCreate', message: message, author: 'bot', chatId: Number(chatId) }), 2000);
+export const addMessageWithThunk = (message, author, chatId) => (dispatch, getState) => {
+    dispatch(addMessage({message: message, author: author, chatId: Number(chatId)}));
+    if (author !== 'chatbot') {
+        setTimeout(() => dispatch(addMessage({
+            message: "hello, " + author,
+            author: 'chatbot',
+            chatId: Number(chatId)
+        })), 1000);
+
+    }
+
 }

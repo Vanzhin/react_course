@@ -3,14 +3,16 @@ import {chatReducer} from "./reducers/chatReducer";
 import {messageReducer} from "./reducers/messageReducer";
 import thunk from "redux-thunk";
 import {composeWithDevTools} from "redux-devtools-extension";
+import storage from "redux-persist/lib/storage"
+import {persistReducer, persistStore} from "redux-persist";
 
-// const logger = (store) => (next) => (action) => {
-//     console.log(store.getState(), action)
-//     return next(action);
-// };
-
+const persistConfig = { key: 'root', storage,
+};
 const reducer = combineReducers({
     chats: chatReducer,
     messages: messageReducer
-})
-export const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)))
+});
+const persistedReducer = persistReducer(persistConfig, reducer);
+
+export const store = createStore(persistedReducer, composeWithDevTools(applyMiddleware(thunk)));
+export const persistor = persistStore(store)

@@ -6,9 +6,9 @@ import HomePage from "../pages/HomePage";
 import ProfilePage from "../pages/ProfilePage";
 import Layout from "./Layout";
 import NotFoundPage from "../pages/NotFoundPage";
-import CurrentChat from "../pages/CurrentChat";
+import CurrentChatContainer from "../pages/CurrentChatContainer";
 import NoChat from "./NoChat";
-import ChatsPage from "../pages/ChatsPage";
+import ChatsPageContainer from "../pages/ChatsPageContainer";
 
 function App() {
     const theme = createTheme({
@@ -39,10 +39,10 @@ function App() {
                     <Route index element={<HomePage/>}/>
                     <Route path={'profile'} element={<ProfilePage name={name}/>}/>
                     {/*<Route path={'chat-test'} element={<ChatListPage/>}/>*/}
-                    <Route path={'chats'} element={<ChatsPage/>}>
+                    <Route path={'chats'} element={<ChatsPageContainer/>}>
                         <Route index element={<NoChat/>}/>
-                        <Route path={':chatId/'} element={<CurrentChat/>}/>
-                        <Route path={':chatId/:userName'} element={<CurrentChat/>}/>
+                        <Route path={':chatId/'} element={<CurrentChatContainer/>}/>
+                        <Route path={':chatId/:userName'} element={<CurrentChatContainer/>}/>
                         <Route path={'nochat'} element={<NoChat/>}/>
                     </Route>
                 </Route>
