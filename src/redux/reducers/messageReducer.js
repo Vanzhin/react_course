@@ -22,7 +22,7 @@ export const messageReducer = (state = initialState, action) => {
                     text: action.payload.message,
                     author: action.payload.author,
                     id: Date.now(),
-                    chatId: action.payload.chatId
+                    chatId: Number(action.payload.chatId)
                 }]
             };
 

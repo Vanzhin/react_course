@@ -1,9 +1,6 @@
 import React, {useState} from 'react';
 import {useParams} from "react-router-dom";
-import MessageList from "../components/Messagelist";
-import {Box, Button, Grid, TextField, Typography} from "@mui/material";
-import SendIcon from "@mui/icons-material/Send";
-import {useTheme} from "@mui/material/styles";
+import {Typography} from "@mui/material";
 import NoChat from "../components/NoChat";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {getChat} from "../store/chats/selectors";
@@ -32,8 +29,8 @@ function CurrentChatContainer() {
     };
     const messagesUpdate = (e) => {
         e.preventDefault();
-
-        dispatch(addMessageWithThunk(message, author, Number(chatId)))
+        dispatch({type: 'ADD_MESSAGE_WITH_SAGA', payload: {message: message, author: author, chatId: chatId}});
+        // dispatch(addMessageWithThunk(message, author, Number(chatId)))
         setMessage('');
     }
     if (!chat.length || !chatId) {
