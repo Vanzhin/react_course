@@ -1,42 +1,12 @@
-import React, {useState} from 'react';
-import {useParams} from "react-router-dom";
-import MessageList from "../components/Messagelist";
+import React from 'react';
 import {Box, Button, Grid, TextField, Typography} from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
+import MessageList from "../components/Messagelist";
 import {useTheme} from "@mui/material/styles";
-import NoChat from "../components/NoChat";
-import {shallowEqual, useDispatch, useSelector} from "react-redux";
-import {getChat} from "../store/chats/selectors";
-import {getMessagesByChat} from "../store/messages/selectors";
 
-
-function CurrentChat() {
-    const {chatId, userName} = useParams();
-    const dispatch = useDispatch();
-    const chat = useSelector(getChat(chatId), shallowEqual);
-    const messages = useSelector(getMessagesByChat(chatId), shallowEqual);
+function CurrentChat({userMessages, messages, headerUserName, setMessage, setAuthor, messagesUpdate, author, message}) {
     const theme = useTheme();
-    const [message, setMessage] = useState('');
-    const [author, setAuthor] = useState('Nikolay');
-    const headerUserName = () => {
-        if (userName) {
-            return <Typography variant="h6" sx={{textAlign: 'start'}}>
-                {userName}'s chat's messages
-            </Typography>
-        }
 
-    };
-    const userMessages = (array) => {
-        return array.filter(item => item.author.toLowerCase() === userName)
-    };
-    const messagesUpdate = (e) => {
-        e.preventDefault();
-        dispatch({type: 'messageCreate', message: message, author: author, chatId: Number(chatId) })
-        setMessage('');
-    }
-    if (!chat.length || !chatId) {
-        return <NoChat/>
-    }
 
     return (
         <div style={{margin: 5}}>
@@ -88,6 +58,7 @@ function CurrentChat() {
             </Typography>
             <MessageList messages={messages}/>
         </div>
+
     );
 }
 

@@ -9,6 +9,7 @@ import {useTheme} from '@mui/material/styles';
 import {NavLink, useParams} from "react-router-dom";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import {useDispatch} from "react-redux";
+import {deleteMassage} from "../redux/reducers/messageReducer";
 
 function MessageList({messages}) {
     const theme = useTheme();
@@ -48,7 +49,7 @@ function MessageList({messages}) {
                                     </div>
 
                                     <HighlightOffIcon sx={{color: theme.palette.button.danger}}
-                                                      onClick={() => (dispatch({type: 'messageDelete', id: item.id}))}/>
+                                                      onClick={() => (dispatch(deleteMassage(item.id)))}/>
                                 </div>
                             }
                         />
