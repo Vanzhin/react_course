@@ -9,6 +9,7 @@ import NotFoundPage from "../pages/NotFoundPage";
 import CurrentChatContainer from "../pages/CurrentChatContainer";
 import NoChat from "./NoChat";
 import ChatsPageContainer from "../pages/ChatsPageContainer";
+import CommentsPage from "../pages/CommentsPage";
 
 function App() {
     const theme = createTheme({
@@ -45,6 +46,8 @@ function App() {
                         <Route path={':chatId/:userName'} element={<CurrentChatContainer/>}/>
                         <Route path={'nochat'} element={<NoChat/>}/>
                     </Route>
+                    <Route path={'comments'} element={<CommentsPage/>}/>
+
                 </Route>
                 <Route path={'*'} element={<NotFoundPage to={'/'}>Home</NotFoundPage>}/>
             </Routes>
