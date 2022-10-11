@@ -29,8 +29,8 @@ function CurrentChatContainer() {
     };
     const messagesUpdate = (e) => {
         e.preventDefault();
-        dispatch({type: 'ADD_MESSAGE_WITH_SAGA', payload: {message: message, author: author, chatId: chatId}});
-        // dispatch(addMessageWithThunk(message, author, Number(chatId)))
+        // dispatch({type: 'ADD_MESSAGE_WITH_SAGA', payload: {message: message, author: author, chatId: chatId}});
+        dispatch(addMessageWithThunk(message, author, Number(chatId)))
         setMessage('');
     }
     if (!chat.length || !chatId) {

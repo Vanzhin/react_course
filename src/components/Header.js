@@ -21,10 +21,10 @@ const navItems = [
         to: '/profile',
         name: 'Profile'
     },
-    // {
-    //     to: '/chat-test',
-    //     name: 'Chat test'
-    // },
+    {
+        to: '/comments',
+        name: 'Comments'
+    },
 ];
 
 

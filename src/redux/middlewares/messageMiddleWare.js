@@ -5,7 +5,7 @@ export const addMessageWithThunk = (message, author, chatId) => (dispatch, getSt
     dispatch(addMessage({message: message, author: author, chatId: Number(chatId)}));
     if (author !== 'chatbot') {
         setTimeout(() => dispatch(addMessage({
-            message: `hello, ${author}! ${randomSentence({word:5})}`,
+            message: `hello, ${author}! ${randomSentence({words:5})}`,
             author: 'chatbot',
             chatId: Number(chatId)
         })), 1000);
