@@ -3,19 +3,14 @@ export  const GET_COMMENTS_SUCCESS = 'COMMENTS:GET_COMMENTS_SUCCESS';
 export  const GET_COMMENTS_FAILURE = 'COMMENTS:GET_COMMENTS_FAILURE';
 export  const GET_COMMENTS_LOADING = 'COMMENTS:GET_COMMENTS_LOADING';
 
+export const REGISTER_LOADING ='REGISTER_LOADING';
+export const REGISTER_SUCCESS ='REGISTER_SUCCESS';
+export const REGISTER_FAILURE ='REGISTER_FAILURE';
 
-export const getCommentsRequest = () => ({
-    type: GET_COMMENTS_REQUEST,
-});
-export const getCommentsSuccess = (data) => ({
-    type: GET_COMMENTS_SUCCESS,
-    payload: data,
-});
-export const getCommentsFailure = (err) => ({
-    type: GET_COMMENTS_FAILURE,
-    payload: err,
-});
-export const getCommentsLoading = (loading) => ({
-    type: GET_COMMENTS_LOADING,
-    payload: loading,
-})
+export const LOGIN_LOADING ='LOGIN_LOADING';
+export const LOGIN_SUCCESS ='LOGIN_SUCCESS';
+export const LOGIN_FAILURE ='LOGIN_FAILURE';
+
+export const LOGOUT_LOADING ='LOGOUT_LOADING';
+export const LOGOUT_SUCCESS ='LOGOUT_SUCCESS';
+export const LOGOUT_FAILURE ='LOGOUT_FAILURE';

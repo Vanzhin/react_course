@@ -4,7 +4,7 @@ export const themes = {
     light: {
         name: 'light',
         background: '#bdbdbd',
-        color: '#3b3b3b'
+        color: '#3b3b3b',
     },
     dark: {
         name: 'dark',
