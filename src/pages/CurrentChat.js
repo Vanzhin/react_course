@@ -4,7 +4,7 @@ import SendIcon from "@mui/icons-material/Send";
 import MessageList from "../components/Messagelist";
 import {useTheme} from "@mui/material/styles";
 
-function CurrentChat({userMessages, messages, headerUserName, setMessage, setAuthor, messagesUpdate, author, message}) {
+function CurrentChat({userMessages, messages, headerUserName, setMessage, messagesUpdate, author, message}) {
     const theme = useTheme();
 
 
@@ -22,14 +22,6 @@ function CurrentChat({userMessages, messages, headerUserName, setMessage, setAut
                           direction="row"
                           justifyContent="center"
                           alignItems="center">
-                        <Grid item xs={12}>
-                            <TextField
-                                label="From"
-                                value={author}
-                                autoFocus
-                                onInput={(event) => setAuthor(event.target.value)}
-                            />
-                        </Grid>
                         <Grid item xs={12}>
                             <TextField
                                 label="Message"

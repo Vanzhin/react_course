@@ -35,6 +35,7 @@ function Header() {
     const {contextTheme, changeTheme} = useContext(ThemeContext);
     const dispatch = useDispatch();
     const name = useSelector(state => state.auth.user?.displayName ?? 'unknown user');
+    const user = useSelector(state => state.auth.user);
     const handleLogout = (e) => {
         e.preventDefault();
         dispatch(logoutInitiate())
@@ -73,10 +74,16 @@ function Header() {
 
                     </Typography>
                     <div>
-                        <Button><HeaderLink to={'/register'}>Sign Up</HeaderLink></Button>
-                        <Button><HeaderLink to={'/login'}>Login</HeaderLink></Button>
-                        <Button onClick={(e) => handleLogout(e)}
-                                sx={{background: contextTheme.background, color: contextTheme.color}}>Logout</Button>
+                        {!user ? (<div>
+                                    <Button><HeaderLink to={'/register'}>Sign Up</HeaderLink></Button>
+                                    <Button><HeaderLink to={'/login'}>Login</HeaderLink></Button>
+                                </div>
+                        ) : (
+                            <Button onClick={(e) => handleLogout(e)}
+                                    sx={{
+                                        background: contextTheme.background,
+                                        color: contextTheme.color
+                                    }}>Logout</Button>)}
                     </div>
                 </Toolbar>
 

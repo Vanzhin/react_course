@@ -11,24 +11,38 @@ import NotFoundPage from "../pages/NotFoundPage";
 import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
 import {auth} from "../services/firebase";
+import PrivateRoute from "../hocs/PrivateRoute";
+import PublicRoute from "../hocs/PublicRoutes";
 
 function AppRoutes() {
     const [authed, setAuthed] = useState(false);
-    useEffect(() => { auth.onAuthStateChanged((user) => {
-        if (user) { setAuthed(true);
-        } else { setAuthed(false);
-        } })
+    useEffect(() => {
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                setAuthed(true);
+            } else {
+                setAuthed(false);
+            }
+        })
     }, []);
 
     return (
         <Routes>
-            <Route exact path={'/'} element={<Layout />}>
+            <Route exact path={'/'} element={<Layout/>}>
                 <Route index element={<HomePage/>}/>
-                <Route path={'register'} element={<RegisterPage/>}/>
-                <Route path={'login'} element={<LoginPage/>}/>
-                <Route path={'profile'} element={<ProfilePage />}/>
+                <Route path={'register'} element={<PublicRoute authed={authed}>
+                    <RegisterPage/>
+                </PublicRoute>}/>
+                <Route path={'login'} element={<PublicRoute authed={authed}>
+                    <LoginPage/>
+                </PublicRoute>}/>
+                <Route path={'profile'} element={<PrivateRoute authed={authed}>
+                    <ProfilePage/>
+                </PrivateRoute>}/>
                 {/*<Route path={'chat-test'} element={<ChatListPage/>}/>*/}
-                <Route path={'chats'} element={<ChatsPageContainer/>}>
+                <Route path={'chats'} element={<PrivateRoute authed={authed}>
+                    <ChatsPageContainer/>
+                </PrivateRoute>}>
                     <Route index element={<NoChat/>}/>
                     <Route path={':chatId/'} element={<CurrentChatContainer/>}/>
                     <Route path={':chatId/:userName'} element={<CurrentChatContainer/>}/>

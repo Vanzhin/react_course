@@ -15,7 +15,7 @@ function CurrentChatContainer() {
     const chat = useSelector(getChat(chatId), shallowEqual);
     const messages = useSelector(getMessagesByChat(chatId), shallowEqual);
     const [message, setMessage] = useState('');
-    const [author, setAuthor] = useState('Nikolay');
+    const author = useSelector(state=>state.auth.user.displayName);
     const headerUserName = () => {
         if (userName) {
             return <Typography variant="h6" sx={{textAlign: 'start'}}>
@@ -38,8 +38,7 @@ function CurrentChatContainer() {
     }
 
     return (
-        <CurrentChat setAuthor={setAuthor}
-                     setMessage={setMessage}
+        <CurrentChat setMessage={setMessage}
                      messages={messages}
                      headerUserName={headerUserName}
                      userMessages={userMessages}
