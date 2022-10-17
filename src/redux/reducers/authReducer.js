@@ -36,12 +36,15 @@ export const authsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: action.payload,
+                error: null,
+
             };
         case LOGOUT_SUCCESS:
-            console.log(state.user)
             return {
                 ...state,
                 user: null,
+                error: null,
+
             }
         case REGISTER_FAILURE:
         case LOGIN_FAILURE:

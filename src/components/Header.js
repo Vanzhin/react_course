@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -9,6 +9,7 @@ import HeaderLink from "./HeaderLink";
 import {ThemeContext, themes} from "../context/themes";
 import {logoutInitiate} from "../redux/reducers/authReducer";
 import {useDispatch, useSelector} from "react-redux";
+import {auth} from "../services/firebase";
 
 const navItems = [
     {
@@ -36,6 +37,7 @@ function Header() {
     const dispatch = useDispatch();
     const name = useSelector(state => state.auth.user?.displayName ?? 'unknown user');
     const user = useSelector(state => state.auth.user);
+
     const handleLogout = (e) => {
         e.preventDefault();
         dispatch(logoutInitiate())

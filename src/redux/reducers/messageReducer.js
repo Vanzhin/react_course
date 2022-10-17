@@ -1,7 +1,7 @@
 const initialState = {
     messages: [
-        {text: "FirstMessage", author: 'test', id: 1, chatId: 1},
-        {text: "FirstMessageHereToo!", author: 'test', id: 2, chatId: 2}
+        // {text: "FirstMessage", author: 'test', id: 1, chatId: 1},
+        // {text: "FirstMessageHereToo!", author: 'test', id: 2, chatId: 2}
     ]
 }
 const CREATE = 'MESSAGE_CREATE';
@@ -21,7 +21,7 @@ export const messageReducer = (state = initialState, action) => {
                 messages: [...state.messages, {
                     text: action.payload.message,
                     author: action.payload.author,
-                    id: Date.now(),
+                    id: action.payload.id,
                     chatId: Number(action.payload.chatId)
                 }]
             };

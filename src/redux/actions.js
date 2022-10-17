@@ -48,4 +48,30 @@ export const logoutFailure = (error) => ({
 export const logoutSuccess = () => ({
     type: types.LOGIN_SUCCESS,
     payload: null
+});
+export const messageAddLoading = (loading = true) => ({
+    type: types.FIREBASE_MESSAGE_ADD_LOADING,
+    payload: loading
+
+});
+export const messageAddFailure = (error) => ({
+    type: types.FIREBASE_MESSAGE_ADD_FAILURE,
+    payload: error.toString()
+});
+export const messageAddSuccess = (message) => ({
+    type: types.FIREBASE_MESSAGE_ADD_SUCCESS,
+    payload: message
+});
+export const getAllFirebaseMessagesLoading = (loading = true) => ({
+    type: types.GET_FIREBASE_MESSAGES_LOADING,
+    payload: loading
+
+});
+export const getAllFirebaseMessagesFailure = (error) => ({
+    type: types.GET_FIREBASE_MESSAGES_FAILURE,
+    payload: error.toString()
+});
+export const getAllFirebaseMessagesSuccess = (messages) => ({
+    type: types.GET_FIREBASE_MESSAGES_SUCCESS,
+    payload: messages
 })
