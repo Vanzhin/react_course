@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Button, Grid} from "@mui/material";
 import HeaderLink from "../components/HeaderLink";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
@@ -6,10 +6,15 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import {Outlet} from "react-router-dom";
 import {useTheme} from "@mui/material/styles";
 import {useDispatch} from "react-redux";
+import {getAllFirebaseMessages} from "../redux/middlewares/firebaseMessageMiddleWare";
 
 function ChatsPage({ chats, handleDelete}) {
     const theme = useTheme();
     const dispatch = useDispatch();
+    useEffect(() => {
+        //получаю здесь сообщения и чаты
+        dispatch(getAllFirebaseMessages());
+    }, []);
 
     return (
         <div className="App" style={{margin: 20}}>
@@ -22,7 +27,7 @@ function ChatsPage({ chats, handleDelete}) {
                     )
                 )}
             </Grid>
-            <Button variant="outlined" endIcon={<AddCircleOutlineIcon/>} onClick={() => dispatch({type: 'chatCreate'})}>create
+            <Button variant="outlined" endIcon={<AddCircleOutlineIcon/>} onClick={() => dispatch({type: 'chatCreate',payload:{id:Date.now()}})}>create
                 new chat</Button>
             <Outlet/>
         </div>

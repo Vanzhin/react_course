@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useParams} from "react-router-dom";
 import {Typography} from "@mui/material";
 import NoChat from "../components/NoChat";
@@ -7,11 +7,9 @@ import {getChat} from "../store/chats/selectors";
 import {getMessagesByChat} from "../store/messages/selectors";
 import {addMessageWithThunk} from "../redux/middlewares/messageMiddleWare";
 import CurrentChat from "./CurrentChat";
-import firebase from "firebase/compat/app";
-import {db} from "../services/firebase";
+
 import {addMessageInitiate} from "../redux/reducers/firebaseMessageReducer";
-import {addMessage} from "../redux/reducers/messageReducer";
-import {getAllFirebaseMessages} from "../redux/middlewares/firebaseMessageMiddleWare";
+
 
 
 function CurrentChatContainer() {
@@ -30,9 +28,7 @@ function CurrentChatContainer() {
         }
 
     };
-    useEffect(() => {
-        dispatch(getAllFirebaseMessages());
-    }, []);
+
 
     const userMessages = (array) => {
         return array.filter(item => item.author.toLowerCase() === userName)
