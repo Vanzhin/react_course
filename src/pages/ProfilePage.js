@@ -2,9 +2,11 @@ import React from 'react';
 import {Avatar, Box, Button, Card, CardActions, CardContent, CardMedia, Container, Grid} from "@mui/material";
 import {useTheme} from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
+import {useSelector} from "react-redux";
 
-function ProfilePage(props) {
+function ProfilePage() {
     const theme = useTheme();
+    const name = useSelector(state=>state.auth.user?.displayName ?? "unknown user")
     return (
         <Grid
             container
@@ -18,11 +20,11 @@ function ProfilePage(props) {
                   direction="row"
                   justifyContent="center"
                   alignItems="center"
-            >                <Avatar sx={{ bgcolor: theme.palette.secondary.main, width: 100, height: 100 }}>{props.name[0].toUpperCase()}</Avatar>
+            >                <Avatar sx={{ bgcolor: theme.palette.secondary.main, width: 100, height: 100 }}>{name[0].toUpperCase()}</Avatar>
             </Grid>
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div" textAlign={'center'}>
-                    {props.name.toUpperCase()}
+                    {name.toUpperCase()}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                     Lizards are a widespread group of squamate reptiles, with over 6,000

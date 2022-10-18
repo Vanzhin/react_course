@@ -3,7 +3,7 @@ import {
     getCommentsLoading,
     getCommentsRequest,
     getCommentsSuccess
-} from "../actionTypes";
+} from "../actions";
 
 export const getAllComments = () => async (dispatch) => {
     dispatch(getCommentsRequest());

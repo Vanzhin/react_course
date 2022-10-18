@@ -1,8 +1,11 @@
 import React from 'react';
 import {AppBar, Box, Button, IconButton, Toolbar, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
+import {useSelector} from "react-redux";
 
-function Footer({name}) {
+function Footer() {
+    const name = useSelector(state => state.auth.user?.displayName ?? 'unknown user');
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">

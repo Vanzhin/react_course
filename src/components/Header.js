@@ -1,12 +1,15 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import {FormControl, FormHelperText, Grid, InputLabel, MenuItem, Select} from "@mui/material";
+import {Button, FormControl, FormHelperText, Grid, MenuItem, Select} from "@mui/material";
 import HeaderLink from "./HeaderLink";
 import {ThemeContext, themes} from "../context/themes";
+import {logoutInitiate} from "../redux/reducers/authReducer";
+import {useDispatch, useSelector} from "react-redux";
+import {auth} from "../services/firebase";
 
 const navItems = [
     {
@@ -28,14 +31,24 @@ const navItems = [
 ];
 
 
-function Header(props) {
-    const {contextTheme, toggleTheme, changeTheme} = useContext(ThemeContext);
+function Header() {
+
+    const {contextTheme, changeTheme} = useContext(ThemeContext);
+    const dispatch = useDispatch();
+    const name = useSelector(state => state.auth.user?.displayName ?? 'unknown user');
+    const user = useSelector(state => state.auth.user);
+
+    const handleLogout = (e) => {
+        e.preventDefault();
+        dispatch(logoutInitiate())
+
+    }
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar position="static">
                 <Toolbar variant="dense">
                     <IconButton edge="start" color="inherit" aria-label="menu" sx={{mr: 2}}>
-                        Hello, {props.name}
+                        Hello, {name}
                     </IconButton>
                     <Typography variant="h6" color="inherit" component="div">
                         <Grid container gap={5}>
@@ -62,7 +75,20 @@ function Header(props) {
                         </Grid>
 
                     </Typography>
+                    <div>
+                        {!user ? (<div>
+                                    <Button><HeaderLink to={'/register'}>Sign Up</HeaderLink></Button>
+                                    <Button><HeaderLink to={'/login'}>Login</HeaderLink></Button>
+                                </div>
+                        ) : (
+                            <Button onClick={(e) => handleLogout(e)}
+                                    sx={{
+                                        background: contextTheme.background,
+                                        color: contextTheme.color
+                                    }}>Logout</Button>)}
+                    </div>
                 </Toolbar>
+
             </AppBar>
         </Box>
     );
