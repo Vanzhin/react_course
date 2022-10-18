@@ -7,6 +7,7 @@ export const getAllFirebaseMessages = () =>  (dispatch) => {
     try {
          db.ref("messages").on("value", (snapshot) => {
             snapshot.forEach(entry => {
+                dispatch({type: 'chatCreate',payload:{id:entry.key}})
                 for (let item in entry.val()) {
                     for (let author in entry.val()[item]) {
                         for (let mesId in entry.val()[item][author]) {
