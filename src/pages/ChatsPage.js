@@ -6,15 +6,20 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import {Outlet} from "react-router-dom";
 import {useTheme} from "@mui/material/styles";
 import {useDispatch} from "react-redux";
-import {getAllFirebaseMessages} from "../redux/middlewares/firebaseMessageMiddleWare";
+import {getAllFirebaseChats} from "../redux/middlewares/firebaseChatMiddleWare";
 
 function ChatsPage({ chats, handleDelete}) {
     const theme = useTheme();
     const dispatch = useDispatch();
     useEffect(() => {
-        //получаю здесь сообщения и чаты
-        dispatch(getAllFirebaseMessages());
-    }, []);
+        //получаю здесь чаты
+
+        dispatch(getAllFirebaseChats());
+
+        return ()=>{
+            dispatch({type: 'chatToInitialState'})
+        }
+    },[]);
 
     return (
         <div className="App" style={{margin: 20}}>

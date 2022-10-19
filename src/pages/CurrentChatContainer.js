@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import {Typography} from "@mui/material";
 import NoChat from "../components/NoChat";
@@ -9,7 +9,9 @@ import {addMessageWithThunk} from "../redux/middlewares/messageMiddleWare";
 import CurrentChat from "./CurrentChat";
 
 import {addMessageInitiate} from "../redux/reducers/firebaseMessageReducer";
-
+import {getAllFirebaseChats} from "../redux/middlewares/firebaseChatMiddleWare";
+import {getAllFirebaseMessages} from "../redux/middlewares/firebaseMessageMiddleWare";
+import {purgeMassage} from "../redux/reducers/messageReducer";
 
 
 function CurrentChatContainer() {
@@ -28,22 +30,33 @@ function CurrentChatContainer() {
         }
 
     };
+    useEffect(() => {
 
+        dispatch(getAllFirebaseMessages(chatId));
+
+        return () => {
+            dispatch(purgeMassage())
+        }
+    }, [chatId]);
 
     const userMessages = (array) => {
         return array.filter(item => item.author.toLowerCase() === userName)
     };
     const messagesUpdate = (e) => {
         e.preventDefault();
+        const mesId = Date.now();
         // dispatch({type: 'ADD_MESSAGE_WITH_SAGA', payload: {message: message, author: author, chatId: chatId}});
-        dispatch(addMessageWithThunk(message, author, Number(chatId)));
-        dispatch(addMessageInitiate(message, chatId, user.user.uid,author))
+        dispatch(addMessageInitiate(message, chatId, user.user.uid, author, mesId));
+
+        // dispatch(addMessageWithThunk(message, author, Number(chatId)));
+
         // addMessageToDb(message)
         setMessage('');
     }
     if (!chat.length || !chatId) {
         return <NoChat/>
     }
+
 
     return (
         <CurrentChat setMessage={setMessage}

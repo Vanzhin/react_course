@@ -1,13 +1,5 @@
 const initialState = {
     chats: [
-        // {
-        //     id: 1,
-        //     name: "Chat1",
-        // },
-        // {
-        //     id: 2,
-        //     name: "Chat2",
-        // }
     ]
 }
 
@@ -24,6 +16,11 @@ export const chatReducer = (state = initialState, action) => {
             return {
                 ...state,
                 chats: [...state.chats, {id: id, name: "Chat" + id}]
+            };
+        case 'chatToInitialState':
+            return {
+                ...state,
+                chats: initialState.chats
             };
         default:
             return state

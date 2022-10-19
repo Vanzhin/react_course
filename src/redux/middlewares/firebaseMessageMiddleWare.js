@@ -2,22 +2,13 @@ import {getAllFirebaseMessagesFailure, getAllFirebaseMessagesLoading, getAllFire
 import {db} from "../../services/firebase";
 import {addMessage} from "../reducers/messageReducer";
 
-export const getAllFirebaseMessages = () =>  (dispatch) => {
-     dispatch(getAllFirebaseMessagesLoading(true))
+export const getAllFirebaseMessages = (chatId) => async (dispatch) => {
+    dispatch(getAllFirebaseMessagesLoading(true))
     try {
-         db.ref("messages").on("value", (snapshot) => {
+        await db.ref("messages").child(chatId).on("value", (snapshot) => {
             snapshot.forEach(entry => {
-                dispatch({type: 'chatCreate',payload:{id:entry.key}})
-                for (let item in entry.val()) {
-                    for (let author in entry.val()[item]) {
-                        for (let mesId in entry.val()[item][author]) {
-                            let message = entry.val()[item][author][mesId]
-                            dispatch(addMessage({message: message, author: author, chatId: entry.key, id: mesId}));
-                        }
-                    }
-
-                }
-
+                const {author, text, uid, id} = entry.val();
+                    dispatch(addMessage({message: text, author: author, uid: uid, id:id, chatId:chatId}));
             });
         });
         dispatch(getAllFirebaseMessagesSuccess())
@@ -28,6 +19,7 @@ export const getAllFirebaseMessages = () =>  (dispatch) => {
     }
 
 }
+
 
 
 

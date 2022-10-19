@@ -40,9 +40,10 @@ function AppRoutes() {
                     <ProfilePage/>
                 </PrivateRoute>}/>
                 {/*<Route path={'chat-test'} element={<ChatListPage/>}/>*/}
-                <Route path={'chats'} element={<PrivateRoute authed={authed}>
-                    <ChatsPageContainer/>
-                </PrivateRoute>}>
+                <Route path={'chats'} element={
+                    <PrivateRoute authed={authed}>
+                        <ChatsPageContainer/>
+                    </PrivateRoute>}>
                     <Route index element={<NoChat/>}/>
                     <Route path={':chatId/'} element={<CurrentChatContainer/>}/>
                     <Route path={':chatId/:userName'} element={<CurrentChatContainer/>}/>

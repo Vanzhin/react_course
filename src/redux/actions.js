@@ -74,4 +74,30 @@ export const getAllFirebaseMessagesFailure = (error) => ({
 export const getAllFirebaseMessagesSuccess = (messages) => ({
     type: types.GET_FIREBASE_MESSAGES_SUCCESS,
     payload: messages
-})
+});
+export const getAllFirebaseChatsLoading = (loading = true) => ({
+    type: types.GET_FIREBASE_MESSAGES_LOADING,
+    payload: loading
+
+});
+export const getAllFirebaseChatsFailure = (error) => ({
+    type: types.GET_FIREBASE_MESSAGES_FAILURE,
+    payload: error.toString()
+});
+export const getAllFirebaseChatsSuccess = (chats) => ({
+    type: types.GET_FIREBASE_MESSAGES_SUCCESS,
+    payload: chats
+});
+export const messageDeleteLoading = (loading = true) => ({
+    type: types.FIREBASE_MESSAGE_DELETE_LOADING,
+    payload: loading
+
+});
+export const messageDeleteFailure = (error) => ({
+    type: types.FIREBASE_MESSAGE_DELETE_FAILURE,
+    payload: error.toString()
+});
+export const messageDeleteSuccess = (id) => ({
+    type: types.FIREBASE_MESSAGE_DELETE_SUCCESS,
+    payload: id
+});

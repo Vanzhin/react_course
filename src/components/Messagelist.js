@@ -8,13 +8,19 @@ import Typography from '@mui/material/Typography';
 import {useTheme} from '@mui/material/styles';
 import {NavLink, useParams} from "react-router-dom";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {deleteMassage} from "../redux/reducers/messageReducer";
+import {deleteMessageWithFirebase} from "../redux/reducers/firebaseMessageReducer";
 
 function MessageList({messages}) {
     const theme = useTheme();
     const dispatch = useDispatch();
     const {chatId} = useParams();
+
+    const handleDelete = (id, chatId) => {
+        dispatch(deleteMassage(id))
+        dispatch(deleteMessageWithFirebase(id, chatId))
+    }
     if (messages.length > 0) {
         return (
             <List sx={{width: '100%', maxWidth: 360, bgcolor: theme.palette.secondary.background, borderRadius: 2}}>
@@ -49,7 +55,7 @@ function MessageList({messages}) {
                                     </div>
 
                                     <HighlightOffIcon sx={{color: theme.palette.button.danger}}
-                                                      onClick={() => (dispatch(deleteMassage(item.id)))}/>
+                                                      onClick={() => handleDelete(item.id, item.chatId)}/>
                                 </div>
                             }
                         />

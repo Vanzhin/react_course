@@ -12,6 +12,7 @@ import {
     registerLoading, registerSuccess
 } from "../actions";
 import {auth} from "../../services/firebase";
+import {purgeMassage} from "./messageReducer";
 
 const initialState = {
     loading: false,
@@ -93,8 +94,10 @@ export const logoutInitiate = () => async (dispatch) => {
     dispatch(logoutLoading());
     try {
         await auth.signOut();
-
-        dispatch(logoutSuccess())
+        // перевожу чаты и сообщения в начальное состояние
+        dispatch({type:'chatToInitialState'});
+        dispatch(purgeMassage());
+        dispatch(logoutSuccess());
     } catch (error) {
         dispatch(logoutFailure(error.toString()));
     } finally {

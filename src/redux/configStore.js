@@ -9,7 +9,11 @@ import createSagaMiddleware from 'redux-saga'
 import {commentsReducer} from "./reducers/commentsReducer";
 import {authsReducer} from "./reducers/authReducer";
 import {firebaseMessageReducer} from "./reducers/firebaseMessageReducer";
-const persistConfig = { key: 'root', storage,
+
+const persistConfig = {
+    key: 'root',
+    storage,
+    blacklist: [ 'chats', 'messages']
 };
 const reducer = combineReducers({
     chats: chatReducer,
