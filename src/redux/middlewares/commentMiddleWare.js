@@ -14,6 +14,8 @@ export const getAllComments = () => async (dispatch) => {
             throw new Error(`Request failed with status ${response.status}`)
         }
         const comments = await response.json();
+        console.log(response)
+
         dispatch(getCommentsSuccess(comments))
         // dispatch(addComments(comments));
     } catch (error) {
